@@ -1,0 +1,17 @@
+import 'package:google_generative_ai/google_generative_ai.dart';
+
+class GeminiService {
+  
+  final String apiKey = 'AIzaSyDm6BY0l5X8JNsu566Gj_ErlbHC4n8V0cE'; 
+
+  Future<String> getAdvice(String condition, double temp) async {
+    final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
+    
+    final prompt = 'Current weather: $condition, ${temp.toStringAsFixed(0)}°C. '
+        'Suggest if I should go out, carry an umbrella, or wear warm clothes. '
+        'Keep answer under 25 words.';
+    
+    final content = await model.generateContent([Content.text(prompt)]);
+    return content.text ?? 'No advice available.';
+  }
+}
